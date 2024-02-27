@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  secondapp: 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: secondapp
+    tty: true
+    networks:
+      - rabbitmq_network
+    environment:
+      - PORT=4000
+      - RUBY_YJIT_ENABLE=1
+      - DATABASE_URL=postgres://postgres:password@postgres/primarydb
+    working_dir: /app
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app
+      - rubygems:/usr/local/bundle
+    depends_on:
+      - postgres
+    entrypoint: ./entrypoint.sh
+    command: bash -c "bundle install && rails s -b 0.0.0.0 -p 4000"
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_DB: primarydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - rabbitmq_network
+
+volumes:
+  rubygems:
+  database:
+
+networks:
+  rabbitmq_network:
+    name: rabbitmq_network

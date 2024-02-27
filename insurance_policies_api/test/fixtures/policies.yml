@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  policy_id: 1
+  data_emissao: 2024-02-23
+  data_fim_cobertura: 2024-02-23
+  insured: one
+  vehicle: one
+
+two:
+  policy_id: 1
+  data_emissao: 2024-02-23
+  data_fim_cobertura: 2024-02-23
+  insured: two
+  vehicle: two
