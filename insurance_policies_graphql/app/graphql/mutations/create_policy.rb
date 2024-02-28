@@ -4,37 +4,35 @@ module Mutations
   class CreatePolicy < BaseMutation
 
     argument :policy_id, Integer, required: true
-    argument :data_emissao, GraphQL::Types::ISO8601Date, required: true
-    argument :data_fim_cobertura, GraphQL::Types::ISO8601Date, required: true
-    argument :segurado_nome, String, required: true
-    argument :segurado_cpf, String, required: true
-    argument :veiculo_marca, String, required: true
-    argument :veiculo_modelo, String, required: true
-    argument :veiculo_ano, Integer, required: true
-    argument :veiculo_placa, String, required: true
+    argument :issue_date, GraphQL::Types::ISO8601Date, required: true
+    argument :coverage_end_date, GraphQL::Types::ISO8601Date, required: true
+    argument :insured_name, String, required: true
+    argument :insured_itin, String, required: true
+    argument :vehicle_car_brand, String, required: true
+    argument :vehicle_model, String, required: true
+    argument :vehicle_year, Integer, required: true
+    argument :vehicle_plate_number, String, required: true
 
     field :status, String, null: false
 
-    def resolve(policy_id:, data_emissao:, data_fim_cobertura:, segurado_nome:, segurado_cpf:, veiculo_marca:, veiculo_modelo:, veiculo_ano:, veiculo_placa:)
+    def resolve(policy_id:, issue_date:, coverage_end_date:, insured_name:, insured_itin:, vehicle_car_brand:, vehicle_model:, vehicle_year:, vehicle_plate_number:)
 
 
       policy_data = {
         policy_id: policy_id,
-        data_emissao: data_emissao,
-        data_fim_cobertura: data_fim_cobertura,
-        segurado: {
-          nome: segurado_nome,
-          cpf: segurado_cpf
+        issue_date: issue_date,
+        coverage_end_date: coverage_end_date,
+        insured: {
+          name: insured_name,
+          itin: insured_itin
         },
-        veiculo: {
-          marca: veiculo_marca,
-          modelo: veiculo_modelo,
-          ano: veiculo_ano,
-          placa: veiculo_placa
+        vehicle: {
+          car_brand: vehicle_car_brand,
+          model: vehicle_model,
+          year: vehicle_year,
+          plate_number: vehicle_plate_number
         }
       }
-      puts "-------------- POLICY_DATA: -----------------"
-      puts policy_data.to_json
 
       BunnyPublisher.new.publish(data: policy_data.to_json, queue: 'policies')
       

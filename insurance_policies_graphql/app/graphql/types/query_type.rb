@@ -33,14 +33,14 @@ module Types
     
       {
         policy_id: json_response["policy_id"],
-        data_emissao: json_response["data_emissao"],
-        data_fim_cobertura: json_response["data_fim_cobertura"],
-        segurado_nome: json_response["insured"]["nome"],
-        segurado_cpf: json_response["insured"]["cpf"],
-        veiculo_marca: json_response["vehicle"]["marca"],
-        veiculo_modelo: json_response["vehicle"]["modelo"],
-        veiculo_ano: json_response["vehicle"]["ano"],
-        veiculo_placa: json_response["vehicle"]["placa"],
+        issue_date: json_response["issue_date"],
+        coverage_end_date: json_response["coverage_end_date"],
+        insured_name: json_response["insured"]["name"],
+        insured_itin: json_response["insured"]["itin"],
+        vehicle_car_brand: json_response["vehicle"]["car_brand"],
+        vehicle_model: json_response["vehicle"]["model"],
+        vehicle_year: json_response["vehicle"]["year"],
+        vehicle_plate_number: json_response["vehicle"]["plate_number"],
       }
     end
     

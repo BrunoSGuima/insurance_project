@@ -1,13 +1,13 @@
 module Types
   class PolicyType < Types::BaseObject
     field :policy_id, ID, null: false
-    field :data_emissao, GraphQL::Types::ISO8601Date, null: true
-    field :data_fim_cobertura, GraphQL::Types::ISO8601Date, null: true
-    field :segurado_nome, String, null: false
-    field :segurado_cpf, String, null: false
-    field :veiculo_marca, String, null: false
-    field :veiculo_modelo, String, null: false
-    field :veiculo_ano, Integer, null: false
-    field :veiculo_placa, String, null: false 
+    field :issue_date, GraphQL::Types::ISO8601Date, null: true
+    field :coverage_end_date, GraphQL::Types::ISO8601Date, null: true
+    field :insured_name, String, null: false
+    field :insured_itin, String, null: false
+    field :vehicle_car_brand, String, null: false
+    field :vehicle_model, String, null: false
+    field :vehicle_year, Integer, null: false
+    field :vehicle_plate_number, String, null: false 
   end
 end

@@ -10,21 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_23_154906) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_28_132019) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "insureds", force: :cascade do |t|
-    t.string "nome"
-    t.string "cpf"
+    t.string "name"
+    t.string "itin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "policies", force: :cascade do |t|
     t.integer "policy_id", null: false
-    t.date "data_emissao"
-    t.date "data_fim_cobertura"
+    t.date "issue_date"
+    t.date "coverage_end_date"
     t.bigint "insured_id", null: false
     t.bigint "vehicle_id", null: false
     t.datetime "created_at", null: false
@@ -35,10 +35,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_23_154906) do
   end
 
   create_table "vehicles", force: :cascade do |t|
-    t.string "placa"
-    t.string "marca"
-    t.string "modelo"
-    t.integer "ano"
+    t.string "plate_number"
+    t.string "car_brand"
+    t.string "model"
+    t.integer "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
