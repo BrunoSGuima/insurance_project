@@ -3,12 +3,12 @@
 docker network create rabbitmq_network
 # Start first application
 echo "Starting insurance_policies_graphql_application..."
-cd insurance_policies_graphql
+cd ./insurance_policies_graphql
 docker compose up -d
 
 # Start second application
 echo "Starting insurance_policies_api_application..."
-cd insurance_policies_api 
+cd ../insurance_policies_api 
 docker compose up -d
 
 echo 'Waiting for rabbitmq to start...'
