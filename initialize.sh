@@ -14,6 +14,4 @@ docker compose up -d
 echo 'Waiting for rabbitmq to start...'
 # await for rabbitmq to start
 sleep 10
-docker exec -it secondapp bash -c "ruby -r ./bunny_connection.rb -e 'BunnyConnection.connection'"
-
-echo "Apps are up and running!"
+docker exec -it secondapp bash -c "rails runner 'BunnyConnection.connection'"

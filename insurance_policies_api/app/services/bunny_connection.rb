@@ -7,6 +7,7 @@ class BunnyConnection
   conn.start
   channel = conn.create_channel
   queue = channel.queue('policies')
+  puts " [*] Waiting for messages. To exit press CTRL+C"
 
   consume(queue)
   end
