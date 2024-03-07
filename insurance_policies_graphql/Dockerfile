@@ -1,9 +1,8 @@
-FROM ruby:3.2 AS base
+FROM ruby:3.2.2 AS base
 
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
 COPY . .
 
 
