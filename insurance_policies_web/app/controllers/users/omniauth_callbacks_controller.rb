@@ -29,6 +29,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:success] = 'Successfully signed in with Google.'
       sign_in_and_redirect user, event: :authentication
       jwt_token = create_jwt_for_user(user)
+      print "O JWT TOKEN ESTÁ AQUI:"
+      print jwt_token
+      print "--------------------------------"
     else
       flash[:alert] = 
       'There was a problem signing in with Google. Please register or try signing in later.'
