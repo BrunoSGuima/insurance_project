@@ -250,6 +250,7 @@ DEPENDENCIES
   devise
   importmap-rails
   jbuilder
+  jwt
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection (~> 1.0)

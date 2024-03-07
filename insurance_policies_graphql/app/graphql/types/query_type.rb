@@ -43,6 +43,27 @@ module Types
         vehicle_plate_number: json_response["vehicle"]["plate_number"],
       }
     end
+
+    field :get_policies, [Types::PolicyType], null: false
+    def get_policies
+      response = HTTParty.get("http://secondapp:4000/policies")
+      json_response = JSON.parse(response.body)
+    
+      json_response.map do |policy|
+        {
+          policy_id: policy["policy_id"],
+          issue_date: policy["issue_date"],
+          coverage_end_date: policy["coverage_end_date"],
+          insured_name: policy["insured"]["name"],
+          insured_itin: policy["insured"]["itin"],
+          vehicle_car_brand: policy["vehicle"]["car_brand"],
+          vehicle_model: policy["vehicle"]["model"],
+          vehicle_year: policy["vehicle"]["year"],
+          vehicle_plate_number: policy["vehicle"]["plate_number"],
+        }
+      end
+    end
+    
     
   end
 end

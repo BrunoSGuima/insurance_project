@@ -28,6 +28,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_out_all_scopes
       flash[:success] = 'Successfully signed in with Google.'
       sign_in_and_redirect user, event: :authentication
+      jwt_token = create_jwt_for_user(user)
     else
       flash[:alert] = 
       'There was a problem signing in with Google. Please register or try signing in later.'
@@ -49,6 +50,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def auth
     @auth ||= request.env['omniauth.auth']
+  end
+
+  def create_jwt_for_user(user)
+    payload = { user_id: user.id, email: user.email, exp: 24.hours.from_now.to_i }
+    jwt_secret = 'chave_secreta'
+    token = JWT.encode(payload, jwt_secret, 'HS256')
+    token
   end
 
 
