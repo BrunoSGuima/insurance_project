@@ -44,9 +44,12 @@ module Types
       }
     end
 
-    field :get_policies, [Types::PolicyType], null: false
-    def get_policies
-      response = HTTParty.get("http://secondapp:4000/policies")
+    field :get_policies, [Types::PolicyType], null: false do
+      argument :jwt_token, String, required: true
+    end
+
+    def get_policies(jwt_token:)
+      response = HTTParty.get("http://secondapp:4000/policies", headers: { "Authorization" => "Bearer #{jwt_token}" })
       json_response = JSON.parse(response.body)
     
       json_response.map do |policy|
