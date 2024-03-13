@@ -1,25 +1,48 @@
-<h1>Home</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home Page</title>
+</head>
+<body>
 
 <% if current_user %>
-<h2><%= current_user.email %></h2>
-<%= image_tag(current_user.avatar_url) %><br>
+  <div class="user-info">
+    <h3><%= current_user.email %></h3>
+    <%= image_tag(current_user.avatar_url) %><br>
+    <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn logout-btn" %>
+  </div>
 
+  <div class="centered-title">
+    <h1>List of Policies</h1>
+  </div>
+  <table class="policies-table">
+    <thead>
+      <tr>
+        <th>Policy ID</th>
+        <th>Issue Date</th>
+        <th>Coverage End Date</th>
+        <th>Insured Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @policies.each do |policy| %>
+        <tr>
+          <td><%= policy["policyId"] %></td>
+          <td><%= policy["issueDate"] %></td>
+          <td><%= policy["coverageEndDate"] %></td>
+          <td><%= policy["insuredName"] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<h3>List of Policies</h3>
-<% @policies.each do |policy| %>
-  <div>
-    <p><strong>Policy ID:</strong> <%= policy["policyId"] %></p>
-    <p><u>Issue Date:</u> <%= policy["issueDate"] %></p>
-    <p><u>Coverage End Date:</u> <%= policy["coverageEndDate"] %></p>
-    <p><u>Insured Name:</u> <%= policy["insuredName"] %></p>
+<% else %>
+  <div class="login-links">
+    <%= link_to "Login", new_user_session_path %>
+    <%= link_to "Create Account", new_user_registration_path %>
   </div>
 <% end %>
 
+</body>
+</html>
 
-<%= link_to "Edit Account", edit_user_registration_path %>
-<%= button_to "Logout", destroy_user_session_path, method: :delete %>
-
-<% else %>
-<%= link_to "Login", new_user_session_path %>
-<%= link_to "Create Account", new_user_registration_path %>
-<% end %>

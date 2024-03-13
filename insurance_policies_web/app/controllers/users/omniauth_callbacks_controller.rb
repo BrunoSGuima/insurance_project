@@ -12,9 +12,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       cookies[:jwt_token] = {value: jwt_token, expires: 24.hours.from_now}
       puts "Token JWT definido no cookie: #{jwt_token}"
       puts "--------------------------------"
-      print "O JWT TOKEN ESTÁ AQUI:"
-      print jwt_token
-      print "--------------------------------"
       sign_in_and_redirect user, event: :authentication
     else
       flash[:alert] = 
