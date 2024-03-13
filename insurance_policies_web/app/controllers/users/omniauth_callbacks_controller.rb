@@ -28,7 +28,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def create_jwt_for_user(user)
     payload = { user_id: user.id, email: user.email, exp: 24.hours.from_now.to_i }
-    jwt_secret = 'chave_secreta'
+    jwt_secret = 'secret_key'
     JWT.encode(payload, jwt_secret, 'HS256')
   end
 

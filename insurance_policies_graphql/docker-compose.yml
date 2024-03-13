@@ -12,7 +12,7 @@ services:
       - RUBY_YJIT_ENABLE=1
     working_dir: /app
     ports:
-      - "3000:3000"
+      - "5000:5000"
     volumes:
       - .:/app
       - rubygems:/usr/local/bundle

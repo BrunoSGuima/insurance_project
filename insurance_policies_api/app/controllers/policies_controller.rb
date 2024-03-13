@@ -1,5 +1,5 @@
 class PoliciesController < ApplicationController
-  before_action :authenticate_request
+  before_action :authenticate_request, only: [:index]
 
 
   def show
@@ -21,7 +21,7 @@ class PoliciesController < ApplicationController
 
     begin
 
-    decoded_token = JWT.decode(token, "chave_secreta", true, { algorithm: 'HS256' })
+    decoded_token = JWT.decode(token, "secret_key", true, { algorithm: 'HS256' })
     rescue JWT::DecodeError => e
       render json: { errors: e.message }, status: :unauthorized
     end

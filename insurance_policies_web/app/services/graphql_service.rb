@@ -1,6 +1,6 @@
 class GraphqlService
   include HTTParty
-  base_uri 'http://localhost:3000'
+  base_uri 'http://app:5000'
 
   def self.get_policies(jwt_token)
     query = <<-GRAPHQL

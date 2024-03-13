@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 # require 'httparty'
+require 'jwt'
 
 module Types
   class QueryType < Types::BaseObject
@@ -22,8 +23,8 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :get_policy, Types::PolicyType, null: true, description: "Recebendo uma apólice pelo ID" do
-       argument :policy_id, ID, required: true, description: "ID da apólice"
+    field :get_policy, Types::PolicyType, null: true, description: "Receiveing policy by ID" do
+       argument :policy_id, ID, required: true, description: "Policy ID"
      end
 
 
@@ -49,6 +50,7 @@ module Types
     end
 
     def get_policies(jwt_token:)
+      # authenticate_request!(jwt_token)
       response = HTTParty.get("http://secondapp:4000/policies", headers: { "Authorization" => "Bearer #{jwt_token}" })
       json_response = JSON.parse(response.body)
     
@@ -64,6 +66,15 @@ module Types
           vehicle_year: policy["vehicle"]["year"],
           vehicle_plate_number: policy["vehicle"]["plate_number"],
         }
+      end
+    end
+
+    def authenticate_request!(jwt_token)
+      jwt_secret = 'secret_key'
+      begin
+        decoded_token = JWT.decode(jwt_token, jwt_secret, true, { algorithm: 'HS256' })
+      rescue JWT::DecodeError => e
+        raise GraphQL::ExecutionError.new("Authentication failed: #{e.message}", extensions: { code: 'UNAUTHORIZED' })
       end
     end
     

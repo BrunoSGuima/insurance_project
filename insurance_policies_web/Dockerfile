@@ -4,5 +4,3 @@ WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
 COPY . .
-
-
