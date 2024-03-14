@@ -11,4 +11,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       resource.update_with_password(params)
     end
   end
+
+  def sign_up(resource_name, resource)
+    super(resource_name, resource)
+    set_jwt_cookie_for(resource)
+  end
+
 end
