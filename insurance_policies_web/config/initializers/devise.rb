@@ -28,7 +28,15 @@ Devise.setup do |config|
   config.omniauth :google_oauth2,
                   Rails.application.credentials.dig(:google_oauth_client_id),
                   Rails.application.credentials.dig(:google_oauth_client_secret)
-
+  config.omniauth :cognito_idp,
+                  Rails.application.credentials.dig(:cognito_client_id),
+                  Rails.application.credentials.dig(:cognito_client_secret),{
+                    client_options: {
+                      site: Rails.application.credentials.dig(:cognito_site_url)},
+                    region: Rails.application.credentials.dig(:cognito_aws_region),
+                    user_pool_id: Rails.application.credentials.dig(:cognito_pool_id),
+                    scope: 'email openid',
+                    name: 'cognito_idp'}
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 

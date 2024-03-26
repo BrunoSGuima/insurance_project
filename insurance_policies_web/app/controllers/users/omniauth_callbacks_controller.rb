@@ -17,6 +17,20 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def cognito_idp
+    user = User.from_omniauth(auth)
+
+    if user.persisted?
+      flash[:success] = "Successfully authenticated from Cognito account."
+      set_jwt_cookie_for(user)
+      sign_in_and_redirect user, event: :authentication
+    else
+      flash[:alert] = "Authentication via Cognito failed."
+      redirect_to new_user_session_path
+    end
+
+  end
+
   private
 
   def auth

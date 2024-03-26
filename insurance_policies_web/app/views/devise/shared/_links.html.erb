@@ -20,13 +20,17 @@
 
 <div class = "centered-title">
   <%- if devise_mapping.omniauthable? %>
-    <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= form_for "Login",
-        url: omniauth_authorize_path(resource_name, provider), 
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <% if provider == :cognito_idp %>
+      <%= button_to "Sign in with Cognito", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
+    <% else %>
+      <%= form_for "Login",
+        url: omniauth_authorize_path(resource_name, provider),
         method: :post,
-        data: {turbo: "false"} do |f| %>
-          <%= f.submit "Login", type: "image", src: url_for("/assets/web_light_sq_SI@1x.png")%>
+        data: { turbo: "false" } do |f| %>
+          <%= f.submit "Login with #{provider.to_s.titleize}", type: "image", src: url_for("/assets/web_light_rd_SU@1x.png") %><br />
       <% end %>
     <% end %>
   <% end %>
+<% end %>
 </div>
