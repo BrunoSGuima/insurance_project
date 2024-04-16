@@ -14,6 +14,8 @@
       <%= image_tag("/assets/noimage.png") %><br>
     <% end %>
     <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn logout-btn" %>
+    <br>
+    <%= link_to "Create New Policy", new_page_path, class: "btn create-policy-btn" %>
   </div>
 
 

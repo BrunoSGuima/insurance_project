@@ -50,7 +50,7 @@ module Types
     end
 
     def get_policies(jwt_token:)
-      # authenticate_request!(jwt_token)
+      authenticate_request!(jwt_token)
       response = HTTParty.get("http://secondapp:4000/policies", headers: { "Authorization" => "Bearer #{jwt_token}" })
       json_response = JSON.parse(response.body)
     
