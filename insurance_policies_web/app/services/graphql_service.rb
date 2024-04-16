@@ -22,7 +22,6 @@ class GraphqlService
       headers: { 'Content-Type' => 'application/json' }
     )
     
-    puts response.body
     JSON.parse(response.body)["data"]["getPolicies"]
   end
 
@@ -39,18 +38,12 @@ class GraphqlService
     GRAPHQL
 
     variables = { input: input }
-    puts "AQUI O DO SERVICE: --------------------------------------"
-    Rails.logger.info("Sending to GraphQL with inputs: #{variables}")
-    puts "AQUI NO SERVICE --------------------------------------"
     response = HTTParty.post(
       "http://app:5000/graphql",
       body: { query: query, variables: variables }.to_json,
       headers: { "Content-Type" => "application/json", "Authorization" => "Bearer #{jwt_token}" }
     )
-    
-    Rails.logger.info("Sending to GraphQL with inputs: #{variables}")
-    Rails.logger.info("GraphQL Response: #{response.body}")
-    
+        
     parsed_response = JSON.parse(response.body)
     if parsed_response["errors"]
       Rails.logger.error("GraphQL Errors: #{parsed_response["errors"]}")

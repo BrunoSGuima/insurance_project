@@ -34,10 +34,6 @@ class PagesController < ApplicationController
     else
       render :new, alert: "Erro ao criar apólice."
     end
-    puts "AQUI: --------------------------------------"
-    Rails.logger.info("Input to GraphQL: #{input}")
-    puts "--------------------------------------"
-
   end
 
   private
