@@ -1,0 +1,38 @@
+<div class="form-container">
+<h2 class="form-tittle"> Nova Apólice </h2>
+  <%= form_with url: pages_path, method: :post, local: true do |form| %>
+    <div class="form-group">
+      <%= form.text_field :policyId, placeholder: "ID da Apólice", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.date_field :issueDate, placeholder: "Data de Emissão", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.date_field :coverageEndDate, placeholder: "Data de Término da Cobertura", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.text_field :insuredName, placeholder: "Nome do Segurado", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.text_field :insuredItin, placeholder: "CPF/CNPJ do Segurado", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.text_field :vehicleCarBrand, placeholder: "Marca do Veículo", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.text_field :vehicleModel, placeholder: "Modelo do Veículo", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.number_field :vehicleYear, placeholder: "Ano do Veículo", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.text_field :vehiclePlateNumber, placeholder: "Placa do Veículo", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.submit "Criar Apólice", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+
+

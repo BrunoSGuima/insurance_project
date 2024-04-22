@@ -22,8 +22,36 @@ class GraphqlService
       headers: { 'Content-Type' => 'application/json' }
     )
     
-    puts response.body
     JSON.parse(response.body)["data"]["getPolicies"]
   end
+
+  def self.create_policy(jwt_token, input)
+    input[:policyId] = input[:policyId].to_i if input[:policyId]
+    input[:vehicleYear] = input[:vehicleYear].to_i if input[:vehicleYear]
+
+    query = <<-GRAPHQL
+      mutation CreatePolicy($input: CreatePolicyInput!) {
+        createPolicy(input: $input) {
+          status
+        }
+      }
+    GRAPHQL
+
+    variables = { input: input }
+    response = HTTParty.post(
+      "http://app:5000/graphql",
+      body: { query: query, variables: variables }.to_json,
+      headers: { "Content-Type" => "application/json", "Authorization" => "Bearer #{jwt_token}" }
+    )
+        
+    parsed_response = JSON.parse(response.body)
+    if parsed_response["errors"]
+      Rails.logger.error("GraphQL Errors: #{parsed_response["errors"]}")
+      return { error: parsed_response["errors"] }
+    end
+  
+    parsed_response.dig("data", "createPolicy")
+  end
+  
   
 end
