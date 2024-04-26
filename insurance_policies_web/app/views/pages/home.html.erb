@@ -29,18 +29,27 @@
         <th>Issue Date</th>
         <th>Coverage End Date</th>
         <th>Insured Name</th>
+        <th>Payment Status</th>
       </tr>
     </thead>
     <tbody>
-      <% @policies.each do |policy| %>
-        <tr>
-          <td><%= policy["policyId"] %></td>
-          <td><%= policy["issueDate"] %></td>
-          <td><%= policy["coverageEndDate"] %></td>
-          <td><%= policy["insuredName"] %></td>
-        </tr>
-      <% end %>
-    </tbody>
+  <% @policies.each do |policy| %>
+    <tr>
+      <td><%= policy["policyId"] %></td>
+      <td><%= policy["issueDate"].to_date.strftime("%d/%m/%Y") %></td>
+      <td><%= policy["coverageEndDate"].to_date.strftime("%d/%m/%Y") %></td>
+      <td><%= policy["insuredName"] %></td>
+      <td>
+        <% if policy["condition"] == "waiting_payment" %>
+          <%= link_to "Aguardando pagamento", policy["paymentLink"], target: "_blank" %>
+        <% elsif policy["condition"] == "paid" %>
+          <span>Apólice paga</span>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</tbody>
+
   </table>
 
 <% else %>

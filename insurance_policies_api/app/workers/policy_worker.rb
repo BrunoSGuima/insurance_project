@@ -43,8 +43,14 @@ class PolicyWorker
       policy_id: policy_id,
       issue_date: issue_date,
       coverage_end_date: coverage_end_date,
+      condition: policy_data[:condition],
+      payment_id: policy_data[:payment_id],
+      payment_link: policy_data[:payment_link],
       insured: insured,
-      vehicle: vehicle
+      vehicle: vehicle,
+      condition: policy_data['condition'],
+      payment_id: policy_data['payment_id'],
+      payment_link: policy_data['payment_link']
     )
     
     if policy.persisted?

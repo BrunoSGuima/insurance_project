@@ -65,6 +65,9 @@ module Types
           vehicle_model: policy["vehicle"]["model"],
           vehicle_year: policy["vehicle"]["year"],
           vehicle_plate_number: policy["vehicle"]["plate_number"],
+          payment_id: policy["payment_id"],
+          payment_link: policy["payment_link"],
+          condition: policy["condition"]
         }
       end
     end

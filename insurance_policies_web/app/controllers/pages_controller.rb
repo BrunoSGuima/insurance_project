@@ -9,6 +9,9 @@ class PagesController < ApplicationController
         puts "JWT Token is missing."
         @policies = []
       end
+      puts "Policies aqui: -----------------------------------------"
+      puts @policies
+      puts "Policies aqui: -----------------------------------------"
     end
   end
 
@@ -16,30 +19,45 @@ class PagesController < ApplicationController
   end
 
   def create
-    jwt_token = cookies[:jwt_token] || session[:jwt_token]
-    input = {
-      policyId: params[:policyId],
-      issueDate: params[:issueDate],
-      coverageEndDate: params[:coverageEndDate],
-      insuredName: params[:insuredName],
-      insuredItin: params[:insuredItin],
-      vehicleCarBrand: params[:vehicleCarBrand],
-      vehicleModel: params[:vehicleModel],
-      vehicleYear: params[:vehicleYear],
-      vehiclePlateNumber: params[:vehiclePlateNumber]
-    }
-    response = GraphqlService.create_policy(jwt_token, input)
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: [{
+        price: 'price_1P8jIuF0XqjltaBhSHMlnuli',
+        quantity: 1,
+      }],
+      mode: 'payment',
+      success_url: payments_success_url,
+      cancel_url: payments_cancel_url
+    )
+
+    input = prepare_input(session)
+
+    response = GraphqlService.create_policy(cookies[:jwt_token] || session[:jwt_token], input)
+
     if response["status"] == "OK"
       redirect_to root_path, notice: "Apólice criada com sucesso!"
     else
-      render :new, alert: "Erro ao criar apólice."
+      render :new, alert: "Erro ao criar apólice: #{response['errors'] || 'Unknown error'}"
     end
   end
 
+
   private
 
-  def policy_params
-    params.require(:policy).permit(:policy_id, :issue_date, :coverage_end_date, :insured_name, :insured_itin, :vehicle_car_brand, :vehicle_model, :vehicle_year, :vehicle_plate_number)
+  def prepare_input(session)
+    {
+    policyId: params[:policyId],
+    issueDate: params[:issueDate],
+    coverageEndDate: params[:coverageEndDate],
+    insuredName: params[:insuredName],
+    insuredItin: params[:insuredItin],
+    vehicleCarBrand: params[:vehicleCarBrand],
+    vehicleModel: params[:vehicleModel],
+    vehicleYear: params[:vehicleYear],
+    vehiclePlateNumber: params[:vehiclePlateNumber],
+    paymentId: session.id,
+    paymentLink: session.url
+    }
   end
   
 end
