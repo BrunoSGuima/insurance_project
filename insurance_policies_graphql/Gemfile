@@ -29,6 +29,7 @@ gem 'bunny'
 gem 'httparty'
 gem 'multi_xml', '~> 0.6.0'
 gem 'jwt'
+gem 'stripe'
 
 
 # Use Redis adapter to run Action Cable in production

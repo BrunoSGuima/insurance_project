@@ -4,14 +4,12 @@ class PagesController < ApplicationController
     if current_user
       jwt_token = cookies[:jwt_token]
       if jwt_token.present?
+        sleep 1
         @policies = GraphqlService.get_policies(jwt_token)
       else
         puts "JWT Token is missing."
         @policies = []
       end
-      puts "Policies aqui: -----------------------------------------"
-      puts @policies
-      puts "Policies aqui: -----------------------------------------"
     end
   end
 
