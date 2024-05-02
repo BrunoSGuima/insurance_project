@@ -38,7 +38,3 @@ class PaymentWorker
     end
   end
 end
-
-
-#worker = PaymentWorker.new
-#worker.start

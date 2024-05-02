@@ -1,5 +1,4 @@
 class PoliciesController < ApplicationController
-  #Atualizar depois aqui
   before_action :authenticate_request, only: [:index]
   before_action :set_policy, only: [:show]
 
