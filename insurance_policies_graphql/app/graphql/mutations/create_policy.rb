@@ -40,10 +40,6 @@ module Mutations
         }
       }
 
-      puts "POLICY BUGADO DO INFERNO AQUI: --------------------------------------------------"
-      puts "Policy data: #{policy_data}"
-      puts "--------------------------------------------------"
-
       BunnyPublisher.new.publish(data: policy_data.to_json, queue: 'policies')
       
       { status: "OK" }
