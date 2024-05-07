@@ -5,30 +5,29 @@ class WebhooksController < ApplicationController
   ENDPOINT_SECRET = Rails.application.credentials.dig(:stripe, :secret_webhook)
 
   def update
-    payload = request.body.read
-    sig_header = request.env['HTTP_STRIPE_SIGNATURE']
+  payload = request.body.read
+  sig_header = request.env['HTTP_STRIPE_SIGNATURE']
 
+  begin
     event = Stripe::Webhook.construct_event(
       payload, sig_header, ENDPOINT_SECRET
     )
 
-    case event.type
-    when 'checkout.session.async_payment_failed'
-      session = event.data.object
-    when 'checkout.session.async_paymenceeded'
-      session = event.data.object
-    when 'checkout.session.completed'
+    if event.type == 'checkout.session.completed'
       session = event.data.object
       @payment_id = session.id
       @payment_condition = session.status
       send_request(payment_update)
-
-    when 'checkout.session.expired'
-      session = event.data.object
     else
       puts "Unhandled event type: #{event.type}"
     end
-
+    rescue Stripe::SignatureVerificationError => e
+      render json: { message: 'Signature verification failed' }, status: 400
+      return
+    rescue => e
+      render json: { message: 'Error processing webhook' }, status: 400
+      return
+    end
   end
 
   def payment_update
