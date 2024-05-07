@@ -19,7 +19,6 @@ services:
     depends_on:
       - rabbitmq
     entrypoint: ./entrypoint.sh
- 
 
   rabbitmq:
     container_name: rabbitmq
@@ -34,14 +33,21 @@ services:
     ports: 
       - "15672:15672"
       - "5672:5672"
-    
+
+  ngrok:
+    image: ngrok/ngrok:alpine
+    container_name: ngrok
+    command: http --domain=caring-flea-leading.ngrok-free.app http://app:5000
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    networks:
+      - rabbitmq_network
+
 volumes:
   rubygems:
   rabbitmq-data:
 
-
 networks:
-  default:
   rabbitmq_network:
     name: rabbitmq_network
     external: true

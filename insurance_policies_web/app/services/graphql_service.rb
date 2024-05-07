@@ -10,6 +10,9 @@ class GraphqlService
           issueDate
           coverageEndDate
           insuredName
+          paymentId
+          paymentLink
+          condition
         }
       }
     GRAPHQL

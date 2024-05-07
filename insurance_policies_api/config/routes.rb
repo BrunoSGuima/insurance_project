@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :policies, only: [:show, :index]
+
+  post "/webhooks" => "webhooks#update"
 end

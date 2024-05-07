@@ -17,6 +17,7 @@ gem 'bunny'
 
 gem 'jwt'
 gem 'base64'
+gem 'stripe'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
