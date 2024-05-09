@@ -32,6 +32,11 @@ class PaymentWorker
 
       if policy.update(condition: data[:condition], payment_link: data[:payment_link])
         puts "Payment updated for policy ##{policy.id}"
+        url = URI("http://localhost:3000/fast_confirm")
+        body = policy.to_json
+        header = { 'Content-Type': 'application/json' }
+
+        Net::HTTP.post(url, body, header)
       else
         puts "Failed to update payment for policy ##{policy.id}: #{policy.errors.full_messages.join(', ')}"
       end

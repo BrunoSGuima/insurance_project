@@ -2,7 +2,7 @@
 
 class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
-  ENDPOINT_SECRET = Rails.application.credentials.dig(:stripe, :secret_webhook)
+  ENDPOINT_SECRET = Rails.application.credentials.dig(:stripe, :webhook_secret)
 
   def update
   payload = request.body.read
