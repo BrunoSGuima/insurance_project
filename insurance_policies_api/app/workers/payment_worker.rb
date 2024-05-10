@@ -32,7 +32,7 @@ class PaymentWorker
 
       if policy.update(condition: data[:condition], payment_link: data[:payment_link])
         puts "Payment updated for policy ##{policy.id}"
-        url = URI("http://localhost:3000/fast_confirm")
+        url = URI(Rails.application.credentials[:confirmation_url])
         body = policy.to_json
         header = { 'Content-Type': 'application/json' }
 
