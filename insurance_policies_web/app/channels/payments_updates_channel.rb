@@ -3,8 +3,4 @@ class PaymentsUpdatesChannel < ApplicationCable::Channel
     stream_from "PaymentsUpdatesChannel"
     stream_for "PaymentsUpdatesChannel"
   end
-
-  def receive
-    ActionCable.server.broadcast "PaymentsUpdatesChannel", "Payment received"
-  end
 end
