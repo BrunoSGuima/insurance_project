@@ -7,11 +7,12 @@ Rails.application.routes.draw do
    }
 
    resources :pages, only: [:new, :create]
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
   
   get 'payments/success', to: 'payments#success', as: 'payments_success'
   get 'payments/cancel', to: 'payments#cancel', as: 'payments_cancel'
+
+  # mount ActionCable.server => '/cable'
+  # post "/confirm", to: "payments#confirm"
+
 
 end

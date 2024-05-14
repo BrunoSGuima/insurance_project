@@ -8,4 +8,8 @@ class PaymentsController < ApplicationController
     flash[:alert] = "Falha no processo de compra."
     redirect_to root_path
   end
+
+  def confirm
+    ActionCable.server.broadcast("PaymentUpdatesChannel", params.to_json)
+  end
 end
